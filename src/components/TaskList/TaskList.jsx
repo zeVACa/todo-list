@@ -1,26 +1,30 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Task from '../Task/Task';
 
-function TaskList() {
-  const tasks = [
-    { completed: true, editing: false, text: 'Completed task' },
-    { completed: false, editing: true, text: 'Editing task' },
-    { completed: false, editing: false, text: 'Active task' },
-  ];
+class TaskList extends Component {
+  constructor(props) {
+    super(props);
+    this.deleteTask = props.deleteTask;
+  }
 
-  return (
-    <ul className="todo-list">
-      {tasks.map((task) => {
-        return (
-          <Task
-            text={task.text}
-            completed={task.completed}
-            editing={task.editing}
-          />
-        );
-      })}
-    </ul>
-  );
+  render() {
+    return (
+      <ul className="todo-list">
+        {this.props.tasks.map((task) => {
+          return (
+            <Task
+              text={task.text}
+              completed={task.completed}
+              editing={task.editing}
+              key={task.id}
+              deleteTask={this.deleteTask}
+              id={task.id}
+            />
+          );
+        })}
+      </ul>
+    );
+  }
 }
 
 export default TaskList;

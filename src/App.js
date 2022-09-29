@@ -1,22 +1,61 @@
+import React, { Component } from 'react';
 import Footer from './components/Footer';
 import NewTaskForm from './components/NewTaskForm';
 import TaskList from './components/TaskList';
 
-function App() {
-  return (
-    <div className="App">
-      <section className="todoapp">
-        <header className="header">
-          <h1>todos</h1>
-          <NewTaskForm />
-        </header>
-        <section className="main">
-          <TaskList />
-          <Footer />
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      tasks: [
+        {
+          id: 1,
+          completed: true,
+          editing: false,
+          text: 'Completed task',
+          active: false,
+        },
+        {
+          id: 2,
+          completed: false,
+          editing: false,
+          text: 'Editing task',
+          active: false,
+        },
+        {
+          id: 3,
+          completed: false,
+          editing: false,
+          text: 'Active task',
+          active: true,
+        },
+      ],
+    };
+  }
+
+  deleteTask = (id) => {
+    this.setState((state) => {
+      return { tasks: state.tasks.filter((item) => item.id !== id) };
+    });
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <section className="todoapp">
+          <header className="header">
+            <h1>todos</h1>
+            <NewTaskForm />
+          </header>
+          <section className="main">
+            <TaskList tasks={this.state.tasks} deleteTask={this.deleteTask} />
+            <Footer />
+          </section>
         </section>
-      </section>
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
 export default App;
