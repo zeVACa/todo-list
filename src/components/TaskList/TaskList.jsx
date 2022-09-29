@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 import Task from '../Task/Task';
 
 class TaskList extends Component {
-  constructor(props) {
-    super(props);
-    this.deleteTask = props.deleteTask;
-  }
-
   render() {
+    const { deleteTask, completeTask } = this.props;
+
     return (
       <ul className="todo-list">
         {this.props.tasks.map((task) => {
@@ -17,8 +14,9 @@ class TaskList extends Component {
               completed={task.completed}
               editing={task.editing}
               key={task.id}
-              deleteTask={this.deleteTask}
+              deleteTask={deleteTask}
               id={task.id}
+              completeTask={completeTask}
             />
           );
         })}

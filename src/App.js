@@ -40,6 +40,20 @@ class App extends Component {
     });
   };
 
+  completeTask = (id) => {
+    this.setState((state) => {
+      return {
+        tasks: state.tasks.map((task) => {
+          if (task.id === id) {
+            return { ...task, completed: !task.completed };
+          }
+
+          return task;
+        }),
+      };
+    });
+  };
+
   render() {
     return (
       <div className="App">
@@ -49,7 +63,11 @@ class App extends Component {
             <NewTaskForm />
           </header>
           <section className="main">
-            <TaskList tasks={this.state.tasks} deleteTask={this.deleteTask} />
+            <TaskList
+              tasks={this.state.tasks}
+              deleteTask={this.deleteTask}
+              completeTask={this.completeTask}
+            />
             <Footer />
           </section>
         </section>
