@@ -15,7 +15,7 @@ class App extends Component {
           id: 1,
           completed: false,
           editing: false,
-          text: 'в инпуте не стирается текст',
+          text: 'Completed task',
           active: false,
         },
         {
@@ -57,6 +57,12 @@ class App extends Component {
   };
 
   onInputChangeHandle = (e) => {
+    this.setState({
+      newTaskInputValue: e.target.value,
+    });
+  };
+
+  onEnterKeyPress = (e) => {
     if (e.key === 'Enter') {
       if (this.state.newTaskInputValue === '') {
         return;
@@ -80,10 +86,6 @@ class App extends Component {
 
       return;
     }
-
-    this.setState((state) => ({
-      newTaskInputValue: state.newTaskInputValue + e.key,
-    }));
   };
 
   deleteCompletedTasks = () => {
@@ -95,7 +97,6 @@ class App extends Component {
   };
 
   setActiveFilterCategory = (categoryName) => {
-    // console.log(this.state.activeFilterCategory);
     this.setState({
       activeFilterCategory: categoryName,
     });
@@ -110,6 +111,7 @@ class App extends Component {
             <NewTaskForm
               newTaskInputValue={this.state.newTaskInputValue}
               onInputChangeHandle={this.onInputChangeHandle}
+              onEnterKeyPress={this.onEnterKeyPress}
             />
           </header>
           <section className="main">
