@@ -3,7 +3,11 @@ import TasksFilter from '../TasksFilter';
 
 class Footer extends Component {
   render() {
-    const { setActiveFilterCategory, activeFilterCategory } = this.props;
+    const {
+      setActiveFilterCategory,
+      activeFilterCategory,
+      deleteCompletedTasks,
+    } = this.props;
 
     return (
       <footer className="footer">
@@ -12,7 +16,9 @@ class Footer extends Component {
           setActiveFilterCategory={setActiveFilterCategory}
           activeFilterCategory={activeFilterCategory}
         />
-        <button className="clear-completed">Clear completed</button>
+        <button className="clear-completed" onClick={deleteCompletedTasks}>
+          Clear completed
+        </button>
       </footer>
     );
   }

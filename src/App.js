@@ -86,6 +86,14 @@ class App extends Component {
     }));
   };
 
+  deleteCompletedTasks = () => {
+    this.setState((state) => {
+      return {
+        tasks: state.tasks.filter((task) => !task.completed),
+      };
+    });
+  };
+
   setActiveFilterCategory = (categoryName) => {
     // console.log(this.state.activeFilterCategory);
     this.setState({
@@ -114,6 +122,7 @@ class App extends Component {
             <Footer
               setActiveFilterCategory={this.setActiveFilterCategory}
               activeFilterCategory={this.state.activeFilterCategory}
+              deleteCompletedTasks={this.deleteCompletedTasks}
             />
           </section>
         </section>
