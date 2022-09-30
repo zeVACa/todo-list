@@ -7,11 +7,12 @@ class Footer extends Component {
       setActiveFilterCategory,
       activeFilterCategory,
       deleteCompletedTasks,
+      uncompletedTasksCount,
     } = this.props;
 
     return (
       <footer className="footer">
-        <span className="todo-count">1 items left</span>
+        <span className="todo-count">{uncompletedTasksCount} items left</span>
         <TasksFilter
           setActiveFilterCategory={setActiveFilterCategory}
           activeFilterCategory={activeFilterCategory}

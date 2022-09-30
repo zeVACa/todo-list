@@ -123,6 +123,9 @@ class App extends Component {
               setActiveFilterCategory={this.setActiveFilterCategory}
               activeFilterCategory={this.state.activeFilterCategory}
               deleteCompletedTasks={this.deleteCompletedTasks}
+              uncompletedTasksCount={
+                this.state.tasks.filter((task) => !task.completed).length
+              }
             />
           </section>
         </section>
