@@ -8,10 +8,11 @@ class App extends Component {
     super(props);
 
     this.state = {
+      newTaskInputValue: '',
       tasks: [
         {
           id: 1,
-          completed: true,
+          completed: false,
           editing: false,
           text: 'Completed task',
           active: false,
@@ -54,13 +55,46 @@ class App extends Component {
     });
   };
 
+  onInputChangeHandle = (e) => {
+    if (e.key === 'Enter') {
+      if (this.state.newTaskInputValue === '') {
+        return;
+      }
+
+      this.setState((state) => {
+        return {
+          newTaskInputValue: '',
+          tasks: [
+            ...state.tasks,
+            {
+              id: state.tasks[state.tasks.length - 1].id + 1,
+              completed: false,
+              editing: false,
+              text: state.newTaskInputValue,
+              active: true,
+            },
+          ],
+        };
+      });
+
+      return;
+    }
+
+    this.setState((state) => ({
+      newTaskInputValue: state.newTaskInputValue + e.key,
+    }));
+  };
+
   render() {
     return (
       <div className="App">
         <section className="todoapp">
           <header className="header">
             <h1>todos</h1>
-            <NewTaskForm />
+            <NewTaskForm
+              newTaskInputValue={this.state.newTaskInputValue}
+              onInputChangeHandle={this.onInputChangeHandle}
+            />
           </header>
           <section className="main">
             <TaskList

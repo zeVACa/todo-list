@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-function NewTaskForm() {
-  return <input className="new-todo" placeholder="What needs to be done?" />;
+class NewTaskForm extends Component {
+  render() {
+    const { newTaskInputValue, onInputChangeHandle } = this.props;
+
+    return (
+      <input
+        className="new-todo"
+        placeholder="What needs to be done?"
+        value={newTaskInputValue}
+        onKeyPress={onInputChangeHandle}
+        onChange={() => {}}
+      />
+    );
+  }
 }
 
 export default NewTaskForm;
