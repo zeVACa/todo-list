@@ -9,12 +9,13 @@ class App extends Component {
 
     this.state = {
       newTaskInputValue: '',
+      activeFilterCategory: 'all',
       tasks: [
         {
           id: 1,
           completed: false,
           editing: false,
-          text: 'Completed task',
+          text: 'в инпуте не стирается текст',
           active: false,
         },
         {
@@ -85,6 +86,13 @@ class App extends Component {
     }));
   };
 
+  setActiveFilterCategory = (categoryName) => {
+    // console.log(this.state.activeFilterCategory);
+    this.setState({
+      activeFilterCategory: categoryName,
+    });
+  };
+
   render() {
     return (
       <div className="App">
@@ -101,8 +109,12 @@ class App extends Component {
               tasks={this.state.tasks}
               deleteTask={this.deleteTask}
               completeTask={this.completeTask}
+              activeFilterCategory={this.state.activeFilterCategory}
             />
-            <Footer />
+            <Footer
+              setActiveFilterCategory={this.setActiveFilterCategory}
+              activeFilterCategory={this.state.activeFilterCategory}
+            />
           </section>
         </section>
       </div>
