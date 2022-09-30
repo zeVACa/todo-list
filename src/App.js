@@ -67,7 +67,7 @@ class App extends Component {
           tasks: [
             ...state.tasks,
             {
-              id: state.tasks[state.tasks.length - 1].id + 1,
+              id: state.tasks[state.tasks.length - 1]?.id + 1 || 1,
               completed: false,
               editing: false,
               text: state.newTaskInputValue,
