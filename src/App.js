@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { v4 as uuid } from 'uuid';
 import Footer from './components/Footer';
 import NewTaskForm from './components/NewTaskForm';
 import TaskList from './components/TaskList';
@@ -12,7 +13,7 @@ class App extends Component {
       activeFilterCategory: 'all',
       tasks: [
         {
-          id: 1,
+          id: uuid(),
           completed: false,
           editing: false,
           text: 'Completed task',
@@ -20,7 +21,7 @@ class App extends Component {
           createdDate: new Date(),
         },
         {
-          id: 2,
+          id: uuid(),
           completed: false,
           editing: false,
           text: 'Editing task',
@@ -28,7 +29,7 @@ class App extends Component {
           createdDate: new Date(),
         },
         {
-          id: 3,
+          id: uuid(),
           completed: false,
           editing: false,
           text: 'Active task',
@@ -40,23 +41,21 @@ class App extends Component {
   }
 
   deleteTask = (id) => {
-    this.setState((state) => {
-      return { tasks: state.tasks.filter((item) => item.id !== id) };
-    });
+    this.setState((state) => ({
+      tasks: state.tasks.filter((item) => item.id !== id),
+    }));
   };
 
   completeTask = (id) => {
-    this.setState((state) => {
-      return {
-        tasks: state.tasks.map((task) => {
-          if (task.id === id) {
-            return { ...task, completed: !task.completed };
-          }
+    this.setState((state) => ({
+      tasks: state.tasks.map((task) => {
+        if (task.id === id) {
+          return { ...task, completed: !task.completed };
+        }
 
-          return task;
-        }),
-      };
-    });
+        return task;
+      }),
+    }));
   };
 
   onInputChangeHandle = (e) => {
@@ -66,38 +65,34 @@ class App extends Component {
   };
 
   onEnterKeyPress = (e) => {
+    const { newTaskInputValue } = this.state;
+
     if (e.key === 'Enter') {
-      if (this.state.newTaskInputValue === '') {
+      if (newTaskInputValue === '') {
         return;
       }
 
-      this.setState((state) => {
-        return {
-          newTaskInputValue: '',
-          tasks: [
-            ...state.tasks,
-            {
-              id: state.tasks[state.tasks.length - 1]?.id + 1 || 1,
-              completed: false,
-              editing: false,
-              text: state.newTaskInputValue,
-              active: true,
-              createdDate: new Date(),
-            },
-          ],
-        };
-      });
-
-      return;
+      this.setState((state) => ({
+        newTaskInputValue: '',
+        tasks: [
+          ...state.tasks,
+          {
+            id: uuid(),
+            completed: false,
+            editing: false,
+            text: state.newTaskInputValue,
+            active: true,
+            createdDate: new Date(),
+          },
+        ],
+      }));
     }
   };
 
   deleteCompletedTasks = () => {
-    this.setState((state) => {
-      return {
-        tasks: state.tasks.filter((task) => !task.completed),
-      };
-    });
+    this.setState((state) => ({
+      tasks: state.tasks.filter((task) => !task.completed),
+    }));
   };
 
   setActiveFilterCategory = (categoryName) => {
@@ -107,31 +102,31 @@ class App extends Component {
   };
 
   render() {
+    const { newTaskInputValue, tasks, activeFilterCategory } = this.state;
+
     return (
       <div className="App">
         <section className="todoapp">
           <header className="header">
             <h1>todos</h1>
             <NewTaskForm
-              newTaskInputValue={this.state.newTaskInputValue}
+              newTaskInputValue={newTaskInputValue}
               onInputChangeHandle={this.onInputChangeHandle}
               onEnterKeyPress={this.onEnterKeyPress}
             />
           </header>
           <section className="main">
             <TaskList
-              tasks={this.state.tasks}
+              tasks={tasks}
               deleteTask={this.deleteTask}
               completeTask={this.completeTask}
-              activeFilterCategory={this.state.activeFilterCategory}
+              activeFilterCategory={activeFilterCategory}
             />
             <Footer
               setActiveFilterCategory={this.setActiveFilterCategory}
-              activeFilterCategory={this.state.activeFilterCategory}
+              activeFilterCategory={activeFilterCategory}
               deleteCompletedTasks={this.deleteCompletedTasks}
-              uncompletedTasksCount={
-                this.state.tasks.filter((task) => !task.completed).length
-              }
+              uncompletedTasksCount={tasks.filter((task) => !task.completed).length}
             />
           </section>
         </section>

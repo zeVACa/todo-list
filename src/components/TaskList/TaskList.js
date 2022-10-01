@@ -1,22 +1,8 @@
 import React, { Component } from 'react';
-import Task from '../Task/Task';
 import PropTypes from 'prop-types';
+import Task from '../Task/Task';
 
 class TaskList extends Component {
-  static defaultProps = {
-    deleteTask: () => {},
-    completeTask: () => {},
-    activeFilterCategory: 'all',
-    tasks: [],
-  };
-
-  static propTypes = {
-    deleteTask: PropTypes.func,
-    completeTask: PropTypes.func,
-    activeFilterCategory: PropTypes.string,
-    tasks: PropTypes.arrayOf(PropTypes.object),
-  };
-
   constructor(props) {
     super(props);
 
@@ -24,10 +10,6 @@ class TaskList extends Component {
       seconds: 0,
     };
   }
-
-  tick = () => {
-    this.setState((state) => ({ seconds: state.seconds + 1 }));
-  };
 
   componentDidMount() {
     this.interval = setInterval(() => this.tick(), 1000);
@@ -37,9 +19,12 @@ class TaskList extends Component {
     clearInterval(this.interval);
   }
 
+  tick = () => {
+    this.setState((state) => ({ seconds: state.seconds + 1 }));
+  };
+
   render() {
-    const { deleteTask, completeTask, activeFilterCategory, tasks } =
-      this.props;
+    const { deleteTask, completeTask, activeFilterCategory, tasks } = this.props;
 
     return (
       <ul className="todo-list">
@@ -77,5 +62,19 @@ class TaskList extends Component {
     );
   }
 }
+
+TaskList.defaultProps = {
+  deleteTask: () => {},
+  completeTask: () => {},
+  activeFilterCategory: 'all',
+  tasks: [],
+};
+
+TaskList.propTypes = {
+  deleteTask: PropTypes.func,
+  completeTask: PropTypes.func,
+  activeFilterCategory: PropTypes.string,
+  tasks: PropTypes.arrayOf(PropTypes.object),
+};
 
 export default TaskList;
