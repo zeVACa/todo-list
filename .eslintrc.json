@@ -11,19 +11,19 @@
       "plugin:import/errors",
       "plugin:import/warnings"
     ],
+    "parser": "@babel/eslint-parser",
     "parserOptions": {
       "ecmaFeatures": {
         "jsx": true
       },
+      "babelOptions": {
+        "parserOpts": {
+          "plugins": ["jsx"]
+        }
+      },
       "ecmaVersion": 12,
       "sourceType": "module",
       "requireConfigFile": false
-    },
-    "parser": "@babel/eslint-parser",
-    "babelOptions": {
-      "parserOpts": {
-        "plugins": ["jsx"]
-      }
     },
     "plugins": ["react", "prettier", "import"],
     "rules": {
