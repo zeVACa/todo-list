@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
+import { formatDistanceToNow } from 'date-fns';
 
 class Task extends Component {
   render() {
-    const { editing, text, completed, deleteTask, id, completeTask } =
-      this.props;
+    const {
+      editing,
+      text,
+      completed,
+      deleteTask,
+      id,
+      completeTask,
+      createdDate,
+    } = this.props;
 
     return (
       <li
@@ -20,7 +28,9 @@ class Task extends Component {
           />
           <label>
             <span className="description">{text}</span>
-            <span className="created">created 17 seconds ago</span>
+            <span className="created">
+              {formatDistanceToNow(createdDate, { includeSeconds: true })}
+            </span>
           </label>
           <button className="icon icon-edit"></button>
           <button

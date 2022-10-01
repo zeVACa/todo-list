@@ -17,6 +17,7 @@ class App extends Component {
           editing: false,
           text: 'Completed task',
           active: false,
+          createdDate: new Date(),
         },
         {
           id: 2,
@@ -24,6 +25,7 @@ class App extends Component {
           editing: false,
           text: 'Editing task',
           active: false,
+          createdDate: new Date(),
         },
         {
           id: 3,
@@ -31,6 +33,7 @@ class App extends Component {
           editing: false,
           text: 'Active task',
           active: true,
+          createdDate: new Date(),
         },
       ],
     };
@@ -79,6 +82,7 @@ class App extends Component {
               editing: false,
               text: state.newTaskInputValue,
               active: true,
+              createdDate: new Date(),
             },
           ],
         };
