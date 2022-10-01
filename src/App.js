@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { v4 as uuid } from 'uuid';
+
 import Footer from './components/Footer';
 import NewTaskForm from './components/NewTaskForm';
 import TaskList from './components/TaskList';
