@@ -20,6 +20,11 @@
       "requireConfigFile": false
     },
     "parser": "@babel/eslint-parser",
+    "babelOptions": {
+      "parserOpts": {
+        "plugins": ["jsx"]
+      }
+    },
     "plugins": ["react", "prettier", "import"],
     "rules": {
       "indent": ["error", 2],
