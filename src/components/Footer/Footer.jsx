@@ -1,7 +1,22 @@
 import React, { Component } from 'react';
 import TasksFilter from '../TasksFilter';
+import PropTypes from 'prop-types';
 
 class Footer extends Component {
+  static defaultProps = {
+    setActiveFilterCategory: () => {},
+    activeFilterCategory: 'all',
+    deleteCompletedTasks: () => {},
+    uncompletedTasksCount: 0,
+  };
+
+  static propTypes = {
+    setActiveFilterCategory: PropTypes.func,
+    activeFilterCategory: PropTypes.string,
+    deleteCompletedTasks: PropTypes.func,
+    uncompletedTasksCount: PropTypes.number,
+  };
+
   render() {
     const {
       setActiveFilterCategory,

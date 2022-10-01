@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class TasksFilter extends Component {
+  static defaultProps = {
+    setActiveFilterCategory: () => {},
+    activeFilterCategory: 'all',
+  };
+
+  static propTypes = {
+    setActiveFilterCategory: PropTypes.func,
+    activeFilterCategory: PropTypes.string,
+  };
+
   render() {
     const { setActiveFilterCategory, activeFilterCategory } = this.props;
 

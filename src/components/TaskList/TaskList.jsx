@@ -1,7 +1,22 @@
 import React, { Component } from 'react';
 import Task from '../Task/Task';
+import PropTypes from 'prop-types';
 
 class TaskList extends Component {
+  static defaultProps = {
+    deleteTask: () => {},
+    completeTask: () => {},
+    activeFilterCategory: 'all',
+    tasks: [],
+  };
+
+  static propTypes = {
+    deleteTask: PropTypes.func,
+    completeTask: PropTypes.func,
+    activeFilterCategory: PropTypes.string,
+    tasks: PropTypes.arrayOf(PropTypes.object),
+  };
+
   constructor(props) {
     super(props);
 
