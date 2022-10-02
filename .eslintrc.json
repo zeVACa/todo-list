@@ -16,14 +16,8 @@
       "ecmaFeatures": {
         "jsx": true
       },
-      "babelOptions": {
-        "parserOpts": {
-          "plugins": ["jsx"]
-        }
-      },
       "ecmaVersion": 12,
-      "sourceType": "module",
-      "requireConfigFile": false
+      "sourceType": "module"
     },
     "plugins": ["react", "prettier", "import"],
     "rules": {
