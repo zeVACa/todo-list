@@ -15,8 +15,7 @@ class NewTaskForm extends Component {
   };
 
   render() {
-    const { newTaskInputValue, onInputChangeHandle, onEnterKeyPress } =
-      this.props;
+    const { newTaskInputValue, onInputChangeHandle, onEnterKeyPress } = this.props;
 
     return (
       <input
