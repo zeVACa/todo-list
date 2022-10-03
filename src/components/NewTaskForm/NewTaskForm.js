@@ -2,28 +2,50 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class NewTaskForm extends Component {
-  static defaultProps = {
-    newTaskInputValue: '',
-    onInputChangeHandle: () => {},
-    onEnterKeyPress: () => {},
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      inputValue: '',
+    };
+  }
+
+  static propTypes = { addNewTask: PropTypes.func };
+
+  static defaultProps = { addNewTask: () => {} };
+
+  onEnterKeyPress = (e) => {
+    const { inputValue } = this.state;
+    const { addNewTask } = this.props;
+
+    if (e.key === 'Enter') {
+      if (inputValue === '') {
+        return;
+      }
+
+      addNewTask(inputValue);
+      this.setState({
+        inputValue: '',
+      });
+    }
   };
 
-  static propTypes = {
-    newTaskInputValue: PropTypes.string,
-    onInputChangeHandle: PropTypes.func,
-    onEnterKeyPress: PropTypes.func,
+  onInputChangeHandle = (e) => {
+    this.setState({
+      inputValue: e.target.value,
+    });
   };
 
   render() {
-    const { newTaskInputValue, onInputChangeHandle, onEnterKeyPress } = this.props;
+    const { inputValue } = this.state;
 
     return (
       <input
         className="new-todo"
         placeholder="What needs to be done?"
-        value={newTaskInputValue}
-        onKeyPress={onEnterKeyPress}
-        onChange={onInputChangeHandle}
+        value={inputValue}
+        onKeyPress={this.onEnterKeyPress}
+        onChange={this.onInputChangeHandle}
       />
     );
   }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 class TasksFilter extends Component {
   static defaultProps = {
@@ -15,28 +16,34 @@ class TasksFilter extends Component {
   render() {
     const { setActiveFilterCategory, activeFilterCategory } = this.props;
 
+    const btnAllClass = classNames({
+      selected: activeFilterCategory === 'all',
+    });
+
+    const btnActiveClass = classNames({
+      selected: activeFilterCategory === 'active',
+    });
+
+    const btnCompletedClass = classNames({
+      selected: activeFilterCategory === 'completed',
+    });
+
     return (
       <ul className="filters">
         <li>
-          <button
-            className={activeFilterCategory === 'all' ? 'selected' : ''}
-            onClick={() => setActiveFilterCategory('all')}
-          >
+          <button className={btnAllClass} onClick={() => setActiveFilterCategory('all')}>
             All
           </button>
         </li>
         <li>
-          <button
-            onClick={() => setActiveFilterCategory('active')}
-            className={activeFilterCategory === 'active' ? 'selected' : ''}
-          >
+          <button onClick={() => setActiveFilterCategory('active')} className={btnActiveClass}>
             Active
           </button>
         </li>
         <li>
           <button
             onClick={() => setActiveFilterCategory('completed')}
-            className={activeFilterCategory === 'completed' ? 'selected' : ''}
+            className={btnCompletedClass}
           >
             Completed
           </button>

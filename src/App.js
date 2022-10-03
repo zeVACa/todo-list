@@ -59,37 +59,6 @@ class App extends Component {
     }));
   };
 
-  onInputChangeHandle = (e) => {
-    this.setState({
-      newTaskInputValue: e.target.value,
-    });
-  };
-
-  onEnterKeyPress = (e) => {
-    const { newTaskInputValue } = this.state;
-
-    if (e.key === 'Enter') {
-      if (newTaskInputValue === '') {
-        return;
-      }
-
-      this.setState((state) => ({
-        newTaskInputValue: '',
-        tasks: [
-          ...state.tasks,
-          {
-            id: uuid(),
-            completed: false,
-            editing: false,
-            text: state.newTaskInputValue,
-            active: true,
-            createdDate: new Date(),
-          },
-        ],
-      }));
-    }
-  };
-
   deleteCompletedTasks = () => {
     this.setState((state) => ({
       tasks: state.tasks.filter((task) => !task.completed),
@@ -102,26 +71,51 @@ class App extends Component {
     });
   };
 
+  addNewTask = (inputValue) => {
+    this.setState((state) => ({
+      tasks: [
+        ...state.tasks,
+        {
+          id: uuid(),
+          completed: false,
+          editing: false,
+          text: inputValue,
+          active: true,
+          createdDate: new Date(),
+        },
+      ],
+    }));
+  };
+
   render() {
-    const { newTaskInputValue, tasks, activeFilterCategory } = this.state;
+    const { tasks, activeFilterCategory } = this.state;
 
     return (
       <div className="App">
         <section className="todoapp">
           <header className="header">
             <h1>todos</h1>
-            <NewTaskForm
-              newTaskInputValue={newTaskInputValue}
-              onInputChangeHandle={this.onInputChangeHandle}
-              onEnterKeyPress={this.onEnterKeyPress}
-            />
+            <NewTaskForm addNewTask={this.addNewTask} />
           </header>
           <section className="main">
             <TaskList
-              tasks={tasks}
+              tasks={tasks.filter((task) => {
+                if (activeFilterCategory === 'all') {
+                  return task;
+                }
+
+                if (activeFilterCategory === 'completed') {
+                  return task.completed;
+                }
+
+                if (activeFilterCategory === 'active') {
+                  return !task.completed;
+                }
+
+                return task;
+              })}
               deleteTask={this.deleteTask}
               completeTask={this.completeTask}
-              activeFilterCategory={activeFilterCategory}
             />
             <Footer
               setActiveFilterCategory={this.setActiveFilterCategory}

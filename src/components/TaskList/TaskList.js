@@ -25,40 +25,23 @@ class TaskList extends Component {
   };
 
   render() {
-    const { deleteTask, completeTask, activeFilterCategory, tasks } = this.props;
+    const { deleteTask, completeTask, tasks } = this.props;
 
     return (
       <ul className="todo-list">
-        {tasks
-          .filter((task) => {
-            if (activeFilterCategory === 'all') {
-              return task;
-            }
-
-            if (activeFilterCategory === 'completed') {
-              return task.completed;
-            }
-
-            if (activeFilterCategory === 'active') {
-              return !task.completed;
-            }
-
-            return task;
-          })
-          .map((task) => {
-            return (
-              <Task
-                text={task.text}
-                completed={task.completed}
-                editing={task.editing}
-                key={task.id}
-                deleteTask={deleteTask}
-                id={task.id}
-                completeTask={completeTask}
-                createdDate={task.createdDate}
-              />
-            );
-          })}
+        {tasks.map((task) => {
+          return (
+            <Task
+              text={task.text}
+              completed={task.completed}
+              editing={task.editing}
+              key={task.id}
+              deleteTask={() => deleteTask(task.id)}
+              completeTask={() => completeTask(task.id)}
+              createdDate={task.createdDate}
+            />
+          );
+        })}
       </ul>
     );
   }
