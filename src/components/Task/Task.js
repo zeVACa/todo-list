@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import PropTypes from 'prop-types';
@@ -13,17 +14,39 @@ function Task({ editing, text, completed, deleteTask, completeTask, createdDate 
     <li className={taskClass}>
       <div className="view">
         <input className="toggle" type="checkbox" checked={completed} onChange={completeTask} />
-        <label id="task">
-          <span className="description">{text}</span>
-          <span className="created">
+        <label>
+          <span className="title">{text}</span>
+          <span className="description">
+            <button className="icon icon-play"></button>
+            <button className="icon icon-pause"></button>
+            12:25
+          </span>
+          <span className="description">
             {formatDistanceToNow(createdDate, { includeSeconds: true })}
           </span>
         </label>
         <button className="icon icon-edit"></button>
         <button className="icon icon-destroy" onClick={deleteTask}></button>
       </div>
-      {editing ? <input type="text" className="edit" value={text} /> : null}
+      {editing && <input type="text" className="edit" value={text} />}
     </li>
+    // <li className="editing">
+    //   <div className="view">
+    //     <input className="toggle" type="checkbox" />
+    //     <label>
+    //       <span className="title">fw</span>
+    //       <span className="description">
+    //         <button className="icon icon-play"></button>
+    //         <button className="icon icon-pause"></button>
+    //         12:25
+    //       </span>
+    //       <span className="description">created 5 minutes ago</span>
+    //     </label>
+    //     <button className="icon icon-edit"></button>
+    //     <button className="icon icon-destroy"></button>
+    //   </div>
+    //   <input type="text" className="edit" />
+    // </li>
   );
 }
 
