@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -7,7 +6,9 @@ class NewTaskForm extends Component {
     super(props);
 
     this.state = {
-      inputValue: '',
+      taskValue: '',
+      minutesValue: '',
+      secondsValue: '',
     };
   }
 
@@ -16,48 +17,60 @@ class NewTaskForm extends Component {
   static defaultProps = { addNewTask: () => {} };
 
   onEnterKeyPress = (e) => {
-    const { inputValue } = this.state;
+    const { taskValue, minutesValue, secondsValue } = this.state;
     const { addNewTask } = this.props;
 
     if (e.key === 'Enter') {
-      if (inputValue === '') {
+      if (taskValue === '') {
         return;
       }
 
-      addNewTask(inputValue);
+      addNewTask(taskValue, parseInt(minutesValue), parseInt(secondsValue));
       this.setState({
-        inputValue: '',
+        taskValue: '',
+        minutesValue: '',
+        secondsValue: '',
       });
     }
   };
 
-  onInputChangeHandle = (e) => {
+  onInputChange = (property, e) => {
     this.setState({
-      inputValue: e.target.value,
+      [property]: e.target.value,
     });
   };
 
   render() {
-    const { inputValue } = this.state;
+    const { taskValue, minutesValue, secondsValue } = this.state;
 
     return (
-      // <input
-      //   className="new-todo"
-      //   placeholder="What needs to be done?"
-      //   value={inputValue}
-      //   onKeyPress={this.onEnterKeyPress}
-      //   onChange={this.onInputChangeHandle}
-      // />
       <form className="new-todo-form">
         <input
           className="new-todo"
           placeholder="Task"
-          value={inputValue}
-          onChange={this.onInputChangeHandle}
-          autofocus
+          value={taskValue}
+          onChange={(e) => this.onInputChange('taskValue', e)}
+          autoFocus
+          onKeyPress={this.onEnterKeyPress}
         />
-        <input className="new-todo-form__timer" placeholder="Min" autofocus />
-        <input className="new-todo-form__timer" placeholder="Sec" autofocus />
+        <input
+          className="new-todo-form__timer"
+          placeholder="Min"
+          autoFocus
+          type="number"
+          onChange={(e) => this.onInputChange('minutesValue', e)}
+          value={minutesValue}
+          onKeyPress={this.onEnterKeyPress}
+        />
+        <input
+          className="new-todo-form__timer"
+          placeholder="Sec"
+          autoFocus
+          type="number"
+          onChange={(e) => this.onInputChange('secondsValue', e)}
+          value={secondsValue}
+          onKeyPress={this.onEnterKeyPress}
+        />
       </form>
     );
   }

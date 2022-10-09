@@ -25,7 +25,7 @@ class TaskList extends Component {
   };
 
   render() {
-    const { deleteTask, completeTask, tasks } = this.props;
+    const { deleteTask, completeTask, tasks, tickTask } = this.props;
 
     return (
       <ul className="todo-list">
@@ -39,6 +39,8 @@ class TaskList extends Component {
               deleteTask={() => deleteTask(task.id)}
               completeTask={() => completeTask(task.id)}
               createdDate={task.createdDate}
+              timeInSeconds={task.timeInSeconds}
+              tickTask={() => tickTask(task.id)}
             />
           );
         })}
@@ -59,6 +61,7 @@ TaskList.propTypes = {
   completeTask: PropTypes.func,
   activeFilterCategory: PropTypes.string,
   tasks: PropTypes.arrayOf(PropTypes.object),
+  tickTask: PropTypes.func.isRequired,
 };
 
 export default TaskList;

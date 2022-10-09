@@ -20,6 +20,7 @@ class App extends Component {
           text: 'Completed task',
           active: false,
           createdDate: new Date(),
+          timeInSeconds: 59,
         },
         {
           id: uuid(),
@@ -28,6 +29,7 @@ class App extends Component {
           text: 'Editing task',
           active: false,
           createdDate: new Date(),
+          timeInSeconds: 60,
         },
         {
           id: uuid(),
@@ -36,10 +38,23 @@ class App extends Component {
           text: 'Active task',
           active: true,
           createdDate: new Date(),
+          timeInSeconds: 61,
         },
       ],
     };
   }
+
+  tickTask = (id) => {
+    this.setState((state) => ({
+      tasks: state.tasks.map((task) => {
+        if (task.id === id && task.timeInSeconds > 0) {
+          return { ...task, timeInSeconds: task.timeInSeconds - 1 };
+        }
+
+        return task;
+      }),
+    }));
+  };
 
   deleteTask = (id) => {
     this.setState((state) => ({
@@ -71,7 +86,7 @@ class App extends Component {
     });
   };
 
-  addNewTask = (inputValue) => {
+  addNewTask = (inputValue, minutes, seconds) => {
     this.setState((state) => ({
       tasks: [
         ...state.tasks,
@@ -82,6 +97,7 @@ class App extends Component {
           text: inputValue,
           active: true,
           createdDate: new Date(),
+          timeInSeconds: minutes * 60 + seconds,
         },
       ],
     }));
@@ -116,6 +132,7 @@ class App extends Component {
               })}
               deleteTask={this.deleteTask}
               completeTask={this.completeTask}
+              tickTask={this.tickTask}
             />
             <Footer
               setActiveFilterCategory={this.setActiveFilterCategory}
