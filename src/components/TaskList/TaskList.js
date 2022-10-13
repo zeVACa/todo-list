@@ -1,31 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Task from '../Task/Task';
+import Task from '../Task/Task.js';
 
 class TaskList extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      seconds: 0,
-    };
-  }
-
-  componentDidMount() {
-    this.interval = setInterval(() => this.tick(), 1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
-  tick = () => {
-    this.setState((state) => ({ seconds: state.seconds + 1 }));
-  };
-
   render() {
-    const { deleteTask, completeTask, tasks, tickTask } = this.props;
+    const { deleteTask, completeTask, tasks } = this.props;
 
     return (
       <ul className="todo-list">
@@ -40,7 +20,6 @@ class TaskList extends Component {
               completeTask={() => completeTask(task.id)}
               createdDate={task.createdDate}
               timeInSeconds={task.timeInSeconds}
-              tickTask={() => tickTask(task.id)}
             />
           );
         })}
@@ -61,7 +40,6 @@ TaskList.propTypes = {
   completeTask: PropTypes.func,
   activeFilterCategory: PropTypes.string,
   tasks: PropTypes.arrayOf(PropTypes.object),
-  tickTask: PropTypes.func.isRequired,
 };
 
 export default TaskList;

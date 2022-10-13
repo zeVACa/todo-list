@@ -4,25 +4,58 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 class Task extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      secondsFromCreated: 0,
+      timerCountDownInSeconds: props.timeInSeconds,
+    };
+
+    this.countDownTimerId = null;
+    this.updateCreatedIntervalId = null;
+  }
+
+  componentDidMount() {
+    this.updateCreatedIntervalId = setInterval(this.updateCreatedTime, 5000);
+  }
+
+  updateCreatedTime = () => {
+    this.setState((state) => ({ secondsFromCreated: state.secondsFromCreated + 5 }));
+  };
+
+  componentDidUpdate() {
+    console.log('update');
+    const { timerCountDownInSeconds } = this.state;
+    if (timerCountDownInSeconds <= 0) {
+      clearInterval(this.countDownTimerId);
+    }
+  }
+
   timerStart = () => {
-    const { tickTask } = this.props;
-    if (!this.intervalId) {
-      this.intervalId = setInterval(tickTask, 1000);
+    if (!this.countDownTimerId && this.state.timerCountDownInSeconds > 0) {
+      this.countDownTimerId = setInterval(
+        () =>
+          this.setState((state) => ({
+            timerCountDownInSeconds: state.timerCountDownInSeconds - 1,
+          })),
+        1000
+      );
     }
   };
 
   timerPaused = () => {
-    clearInterval(this.intervalId);
-    this.intervalId = null;
+    clearInterval(this.countDownTimerId);
+    this.countDownTimerId = null;
   };
 
   componentWillUnmount() {
-    clearInterval(this.intervalId);
+    clearInterval(this.countDownTimerId);
   }
 
   render() {
-    const { editing, text, completed, deleteTask, completeTask, createdDate, timeInSeconds } =
-      this.props;
+    const { editing, text, completed, deleteTask, completeTask, createdDate } = this.props;
+    const { timerCountDownInSeconds } = this.state;
 
     const taskClass = classNames({
       completed,
@@ -38,14 +71,22 @@ class Task extends Component {
             <span className="description">
               <button className="icon icon-play" onClick={this.timerStart}></button>
               <button className="icon icon-pause" onClick={this.timerPaused}></button>
-              <span>{`${Math.floor(timeInSeconds / 60)}:${timeInSeconds % 60}`}</span>
+              <span>{`${Math.floor(timerCountDownInSeconds / 60)}:${
+                timerCountDownInSeconds % 60
+              }`}</span>
             </span>
             <span className="description">
               {formatDistanceToNow(createdDate, { includeSeconds: true })}
             </span>
           </label>
           <button className="icon icon-edit"></button>
-          <button className="icon icon-destroy" onClick={deleteTask}></button>
+          <button
+            className="icon icon-destroy"
+            onClick={() => {
+              deleteTask();
+              clearInterval(this.updateCreatedIntervalId);
+            }}
+          ></button>
         </div>
         {editing && <input type="text" className="edit" value={text} />}
       </li>
@@ -69,7 +110,7 @@ Task.propTypes = {
   deleteTask: PropTypes.func,
   completeTask: PropTypes.func,
   createdDate: PropTypes.object,
-  tickTask: PropTypes.func.isRequired,
+  timeInSeconds: PropTypes.number,
 };
 
 export default Task;

@@ -17,7 +17,7 @@ class NewTaskForm extends Component {
   static defaultProps = { addNewTask: () => {} };
 
   onEnterKeyPress = (e) => {
-    const { taskValue, minutesValue, secondsValue } = this.state;
+    let { taskValue, minutesValue, secondsValue } = this.state;
     const { addNewTask } = this.props;
 
     if (e.key === 'Enter') {
@@ -25,12 +25,22 @@ class NewTaskForm extends Component {
         return;
       }
 
-      addNewTask(taskValue, parseInt(minutesValue), parseInt(secondsValue));
-      this.setState({
-        taskValue: '',
-        minutesValue: '',
-        secondsValue: '',
-      });
+      if (minutesValue === '') minutesValue = 0;
+      if (secondsValue === '') secondsValue = 0;
+
+      if (
+        minutesValue >= 0 &&
+        secondsValue >= 0 &&
+        Number.isInteger(Number(minutesValue)) &&
+        Number.isInteger(Number(secondsValue))
+      ) {
+        addNewTask(taskValue, parseInt(minutesValue), parseInt(secondsValue));
+        this.setState({
+          taskValue: '',
+          minutesValue: '',
+          secondsValue: '',
+        });
+      }
     }
   };
 
@@ -50,13 +60,11 @@ class NewTaskForm extends Component {
           placeholder="Task"
           value={taskValue}
           onChange={(e) => this.onInputChange('taskValue', e)}
-          autoFocus
           onKeyPress={this.onEnterKeyPress}
         />
         <input
           className="new-todo-form__timer"
           placeholder="Min"
-          autoFocus
           type="number"
           onChange={(e) => this.onInputChange('minutesValue', e)}
           value={minutesValue}
@@ -65,7 +73,6 @@ class NewTaskForm extends Component {
         <input
           className="new-todo-form__timer"
           placeholder="Sec"
-          autoFocus
           type="number"
           onChange={(e) => this.onInputChange('secondsValue', e)}
           value={secondsValue}

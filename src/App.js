@@ -10,7 +10,6 @@ class App extends Component {
     super(props);
 
     this.state = {
-      newTaskInputValue: '',
       activeFilterCategory: 'all',
       tasks: [
         {
@@ -44,18 +43,6 @@ class App extends Component {
     };
   }
 
-  tickTask = (id) => {
-    this.setState((state) => ({
-      tasks: state.tasks.map((task) => {
-        if (task.id === id && task.timeInSeconds > 0) {
-          return { ...task, timeInSeconds: task.timeInSeconds - 1 };
-        }
-
-        return task;
-      }),
-    }));
-  };
-
   deleteTask = (id) => {
     this.setState((state) => ({
       tasks: state.tasks.filter((item) => item.id !== id),
@@ -87,6 +74,7 @@ class App extends Component {
   };
 
   addNewTask = (inputValue, minutes, seconds) => {
+    console.log(inputValue, minutes, seconds);
     this.setState((state) => ({
       tasks: [
         ...state.tasks,
@@ -97,7 +85,7 @@ class App extends Component {
           text: inputValue,
           active: true,
           createdDate: new Date(),
-          timeInSeconds: minutes * 60 + seconds,
+          timeInSeconds: Number(minutes) * 60 + Number(seconds),
         },
       ],
     }));
@@ -132,7 +120,6 @@ class App extends Component {
               })}
               deleteTask={this.deleteTask}
               completeTask={this.completeTask}
-              tickTask={this.tickTask}
             />
             <Footer
               setActiveFilterCategory={this.setActiveFilterCategory}
