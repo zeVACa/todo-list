@@ -74,7 +74,6 @@ class App extends Component {
   };
 
   addNewTask = (inputValue, minutes, seconds) => {
-    console.log(inputValue, minutes, seconds);
     this.setState((state) => ({
       tasks: [
         ...state.tasks,

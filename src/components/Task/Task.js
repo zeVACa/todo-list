@@ -25,7 +25,6 @@ class Task extends Component {
   };
 
   componentDidUpdate() {
-    console.log('update');
     const { timerCountDownInSeconds } = this.state;
     if (timerCountDownInSeconds <= 0) {
       clearInterval(this.countDownTimerId);
