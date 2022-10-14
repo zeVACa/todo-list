@@ -84,6 +84,7 @@ class Task extends Component {
             onClick={() => {
               deleteTask();
               clearInterval(this.updateCreatedIntervalId);
+              clearInterval(this.countDownTimerId);
             }}
           ></button>
         </div>
