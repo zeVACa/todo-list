@@ -25,12 +25,13 @@ class NewTaskForm extends Component {
         return;
       }
 
-      if (minutesValue === '') minutesValue = 0;
-      if (secondsValue === '') secondsValue = 0;
-
       if (
+        minutesValue &&
+        secondsValue &&
         minutesValue >= 0 &&
+        minutesValue <= 10000 &&
         secondsValue >= 0 &&
+        secondsValue <= 59 &&
         Number.isInteger(Number(minutesValue)) &&
         Number.isInteger(Number(secondsValue))
       ) {
