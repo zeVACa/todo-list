@@ -6,38 +6,23 @@ const NewTaskForm = ({ addNewTask }) => {
   const [minutesValue, setMinutesValue] = useState('');
   const [secondsValue, setSecondsValue] = useState('');
 
-  const onEnterKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      if (taskValue === '') {
-        return;
-      }
-
-      if (
-        minutesValue &&
-        secondsValue &&
-        minutesValue >= 0 &&
-        minutesValue <= 10000 &&
-        secondsValue >= 0 &&
-        secondsValue <= 59 &&
-        Number.isInteger(Number(minutesValue)) &&
-        Number.isInteger(Number(secondsValue))
-      ) {
+  return (
+    <form
+      className="new-todo-form"
+      onSubmit={(e) => {
+        e.preventDefault();
         addNewTask(taskValue, parseInt(minutesValue), parseInt(secondsValue));
         setTaskValue('');
         setMinutesValue('');
         setSecondsValue('');
-      }
-    }
-  };
-
-  return (
-    <form className="new-todo-form">
+      }}
+    >
       <input
         className="new-todo"
         placeholder="Task"
         value={taskValue}
         onChange={(e) => setTaskValue(e.target.value)}
-        onKeyPress={onEnterKeyPress}
+        required
       />
       <input
         className="new-todo-form__timer"
@@ -45,7 +30,10 @@ const NewTaskForm = ({ addNewTask }) => {
         type="number"
         onChange={(e) => setMinutesValue(e.target.value)}
         value={minutesValue}
-        onKeyPress={onEnterKeyPress}
+        step={1}
+        required
+        min={0}
+        max={10000}
       />
       <input
         className="new-todo-form__timer"
@@ -53,8 +41,12 @@ const NewTaskForm = ({ addNewTask }) => {
         type="number"
         onChange={(e) => setSecondsValue(e.target.value)}
         value={secondsValue}
-        onKeyPress={onEnterKeyPress}
+        step={1}
+        required
+        min={0}
+        max={59}
       />
+      <button type="submit" style={{ display: 'none' }}></button>
     </form>
   );
 };
