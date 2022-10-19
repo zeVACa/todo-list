@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -16,35 +17,6 @@ class NewTaskForm extends Component {
 
   static defaultProps = { addNewTask: () => {} };
 
-  onEnterKeyPress = (e) => {
-    let { taskValue, minutesValue, secondsValue } = this.state;
-    const { addNewTask } = this.props;
-
-    if (e.key === 'Enter') {
-      if (taskValue === '') {
-        return;
-      }
-
-      if (
-        minutesValue &&
-        secondsValue &&
-        minutesValue >= 0 &&
-        minutesValue <= 10000 &&
-        secondsValue >= 0 &&
-        secondsValue <= 59 &&
-        Number.isInteger(Number(minutesValue)) &&
-        Number.isInteger(Number(secondsValue))
-      ) {
-        addNewTask(taskValue, parseInt(minutesValue), parseInt(secondsValue));
-        this.setState({
-          taskValue: '',
-          minutesValue: '',
-          secondsValue: '',
-        });
-      }
-    }
-  };
-
   onInputChange = (property, e) => {
     this.setState({
       [property]: e.target.value,
@@ -53,32 +25,52 @@ class NewTaskForm extends Component {
 
   render() {
     const { taskValue, minutesValue, secondsValue } = this.state;
+    const { addNewTask } = this.props;
 
     return (
-      <form className="new-todo-form">
+      <form
+        className="new-todo-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          console.log(1);
+          addNewTask(taskValue, parseInt(minutesValue), parseInt(secondsValue));
+          this.setState({
+            taskValue: '',
+            minutesValue: '',
+            secondsValue: '',
+          });
+        }}
+      >
         <input
           className="new-todo"
           placeholder="Task"
+          required
           value={taskValue}
           onChange={(e) => this.onInputChange('taskValue', e)}
-          onKeyPress={this.onEnterKeyPress}
         />
         <input
           className="new-todo-form__timer"
           placeholder="Min"
+          required
           type="number"
+          min={0}
+          max={10000}
           onChange={(e) => this.onInputChange('minutesValue', e)}
           value={minutesValue}
-          onKeyPress={this.onEnterKeyPress}
         />
         <input
           className="new-todo-form__timer"
           placeholder="Sec"
+          required
           type="number"
+          min={0}
+          max={59}
           onChange={(e) => this.onInputChange('secondsValue', e)}
           value={secondsValue}
-          onKeyPress={this.onEnterKeyPress}
         />
+        <button type="submit" style={{ display: 'none' }}>
+          отправить
+        </button>
       </form>
     );
   }
