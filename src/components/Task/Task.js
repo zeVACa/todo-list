@@ -1,5 +1,4 @@
-/* eslint-disable */
-import React, { Component, useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
