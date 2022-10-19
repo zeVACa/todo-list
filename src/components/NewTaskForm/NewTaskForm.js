@@ -32,7 +32,6 @@ class NewTaskForm extends Component {
         className="new-todo-form"
         onSubmit={(e) => {
           e.preventDefault();
-          console.log(1);
           addNewTask(taskValue, parseInt(minutesValue), parseInt(secondsValue));
           this.setState({
             taskValue: '',
