@@ -1,9 +1,90 @@
-import React, { Component } from 'react';
+/* eslint-disable */
+import React, { Component, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 
 import Footer from './components/Footer';
 import NewTaskForm from './components/NewTaskForm';
 import TaskList from './components/TaskList';
+
+// const App = () => {
+//   const [activeFilterCategory, setActiveFilterCategory] = useState('all');
+//   const [tasks, setTasks] = useState([
+//     {
+//       id: uuid(),
+//       completed: false,
+//       editing: false,
+//       text: 'Completed task',
+//       active: false,
+//       createdDate: new Date(),
+//       timeInSeconds: 59,
+//     },
+//     {
+//       id: uuid(),
+//       completed: false,
+//       editing: false,
+//       text: 'Editing task',
+//       active: false,
+//       createdDate: new Date(),
+//       timeInSeconds: 60,
+//     },
+//     {
+//       id: uuid(),
+//       completed: false,
+//       editing: false,
+//       text: 'Active task',
+//       active: true,
+//       createdDate: new Date(),
+//       timeInSeconds: 61,
+//     },
+//   ]);
+
+//   const deleteTask = (id) => {
+//     this.setState((state) => ({
+//       tasks: state.tasks.filter((item) => item.id !== id),
+//     }));
+//   };
+
+//   const completeTask = (id) => {
+//     this.setState((state) => ({
+//       tasks: state.tasks.map((task) => {
+//         if (task.id === id) {
+//           return { ...task, completed: !task.completed };
+//         }
+
+//         return task;
+//       }),
+//     }));
+//   };
+
+//   const deleteCompletedTasks = () => {
+//     this.setState((state) => ({
+//       tasks: state.tasks.filter((task) => !task.completed),
+//     }));
+//   };
+
+//   // const setActiveFilterCategory = (categoryName) => {
+//   //   this.setState({
+//   //     activeFilterCategory: categoryName,
+//   //   });
+//   // };
+
+//   const addNewTask = (inputValue, minutes, seconds) => {
+//     this.setState((state) => ({
+//       tasks: [
+//         ...state.tasks,
+//         {
+//           id: uuid(),
+//           completed: false,
+//           editing: false,
+//           text: inputValue,
+//           active: true,
+//           createdDate: new Date(),
+//           timeInSeconds: Number(minutes) * 60 + Number(seconds),
+//         },
+//       ],
+//     }));
+//   };
+// };
 
 class App extends Component {
   constructor(props) {
