@@ -16,16 +16,17 @@ const Task = ({
   const [timerCountDownInSeconds, setTimerCountDownInSeconds] = useState(timeInSeconds);
 
   const countDownTimerId = useRef(null);
+  const updateCreatedIntervalId = useRef(null);
 
   useEffect(() => {
-    const updateCreatedIntervalId = setInterval(
+    updateCreatedIntervalId.current = setInterval(
       () => setSecondsFromCreated((prevSeconds) => prevSeconds + 5),
       5000
     );
 
     return () => {
       clearInterval(countDownTimerId.current);
-      clearInterval(updateCreatedIntervalId);
+      clearInterval(updateCreatedIntervalId.current);
     };
   }, []);
 
@@ -80,8 +81,8 @@ const Task = ({
           className="icon icon-destroy"
           onClick={() => {
             deleteTask();
-            clearInterval(this.updateCreatedIntervalId);
-            clearInterval(this.countDownTimerId);
+            clearInterval(updateCreatedIntervalId.current);
+            clearInterval(countDownTimerId.current);
           }}
         ></button>
       </div>
