@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -54,6 +53,7 @@ class NewTaskForm extends Component {
           type="number"
           min={0}
           max={10000}
+          step={1}
           onChange={(e) => this.onInputChange('minutesValue', e)}
           value={minutesValue}
         />
@@ -64,6 +64,7 @@ class NewTaskForm extends Component {
           type="number"
           min={0}
           max={59}
+          step={1}
           onChange={(e) => this.onInputChange('secondsValue', e)}
           value={secondsValue}
         />
